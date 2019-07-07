@@ -1,0 +1,118 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "IoT Starter Kit";
+}
+
+<div class="text-center">
+    <h1 class="display-4">IoT Starter Kit</h1>
+</div>
+
+<div class="row">
+    <div class="col-sm">
+        <h2>Build Server</h2>
+    </div>
+    <div class="col-sm">
+        <h2>GitHub</h2>
+    </div>
+    <div class="col-sm">
+        <h2>Docker Hub</h2>
+    </div>
+    <div class="col-sm">
+        <h2>Test Server</h2>
+    </div>
+    <div class="col-sm">
+        <h2>Local Device</h2>
+    </div>
+</div>
+
+<!--
+<div class="row">
+    <div class="col-sm">
+        <div>
+            <img src="~/images/jenkins.png" class="img-fluid" />
+        </div>
+    </div>
+    <div class="col-sm">
+        <img src="~/images/github.png" class="img-fluid" />
+    </div>
+    <div class="col-sm">
+        <img src="~/images/docker.png" class="img-fluid" />
+    </div>
+    <div class="col-sm">
+        <img src="~/images/aws.png" class="img-fluid" />
+    </div>
+    <div class="col-sm">
+        <img src="~/images/arm.png" class="img-fluid" />
+    </div>
+</div>
+-->
+
+<form method="post">
+    <div class="row">
+        <div class="col-sm">
+            <a href=@Model.JenkinsUrl target="_blank">This is your Jenkins server</a>            
+            <div>
+                Username: <code>@Model.JenkinsUsername</code>
+            </div>
+            <div>
+                Password: <code>@Model.JenkinsPassword</code>
+            </div>
+        </div>
+        <div class="col-sm">
+            <a href=@Model.GitHubUrl target="_blank">This is your GitHub repo</a>
+        </div>        
+        <div class="col-sm">
+            <a href=@Model.DockerHubUrl target="_blank">These are your Docker Hub repos</a>
+        </div>
+        <div class="col-sm">
+            <input type="submit" asp-page-handler="deployTest" value="Deploy" />
+            <input type="submit" asp-page-handler="removeTest" value="Remove" />
+        </div>
+        <div class="col-sm">
+            <input type="submit" asp-page-handler="deployLocal" value="Deploy" />
+            <input type="submit" asp-page-handler="removeLocal" value="Remove" />
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    <div class="col-sm">
+        <p>Jenkins is running on an A1 instance in AWS. That's an Arm-based server, so it will compile your IoT apps using the native CPU architecture</p>
+    </div>
+    <div class="col-sm">
+        <p>Push your local code to GitHub - that will trigger a build on Jenkins. <p>
+    </div>    
+    <div class="col-sm">
+        <p>The Jenkins build packages your IoT app and service into Arm-based Docker images and shares them on Docker Hub.<p>
+    </div>
+    <div class="col-sm">
+        <p>You can use the same A1 instance running Jenkins as your test server. Click Deploy to run the IoT service from the latest build to the server.</p>
+    </div>
+    <div class="col-sm">
+        <p>Your local device has been set up with Docker. Click Deploy to run the IoT device app from the latest build onto your local Arm device.</p>
+    </div>
+</div>
+
+<div>
+    <h2> Next Steps</h2>
+    <div>
+        1. Push your new demo code:
+        <pre><code>
+            git init
+            git add --all
+            git commit -m 'Demo app'
+            git remote add origin @Model.GitHubUrl
+            git push origin master
+            </code></pre>
+    </div>
+    <div>
+        2. Deploy your IoT Service to the test server
+    </div>    
+    <div>
+        3. Deploy your IoT app to the local device
+    </div>
+    <div>
+        4. Browse to <a href=@Model.TestServerUrl target="_blank">the test server</a> to see data sent by the device to the service
+    </div>
+</div>
